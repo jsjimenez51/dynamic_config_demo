@@ -1,0 +1,36 @@
+version: 2.1
+
+parameters:
+  api:
+    type: boolean
+    default: false
+  auth:
+    type: boolean
+    default: false
+
+jobs:
+  api-build:
+    docker:
+      - image: cimg/base:2021.01
+    steps:
+      - run:
+          name: echo Hello
+          command: |
+            echo "This is the API project"
+  auth-build:
+    docker:
+      - image: cimg/base:2021.01
+    steps:
+      - run:
+          name: echo Hello
+          command: |
+            echo "This is the AUTH project"
+workflows:
+  api:
+    when: << pipeline.parameters.api >>
+    jobs:
+      - api-build
+  auth:
+    when: << pipeline.parameters.auth >>
+    jobs:
+      - auth-build
