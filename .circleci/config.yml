@@ -12,7 +12,7 @@ workflows:
           mapping: |
             packages/api/.* api true
             packages/auth/.* auth true
-            packages/e2e/.* auth true
-            packages/unit/.* auth true
+            packages/e2e/.* e2e true
+            packages/unit/.* unit true
           # # Optional, defaults to main:
           # base-revision: origin/develop
