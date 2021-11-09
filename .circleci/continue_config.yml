@@ -7,6 +7,12 @@ parameters:
   auth:
     type: boolean
     default: false
+  e2e:
+    type: boolean
+    default: false
+  unit:
+    type: boolean
+    default: false
 
 jobs:
   api-build:
@@ -25,6 +31,22 @@ jobs:
           name: echo Hello
           command: |
             echo "This is the AUTH project"
+  e2e-tests:
+    docker:
+      - image: cimg/base:2021.01
+    steps:
+      - run:
+          name: echo Testing
+          command: |
+            echo "This is the e2e tests"
+  unit-tests:
+    docker:
+      - image: cimg/base:2021.01
+    steps:
+      - run:
+          name: echo Hello
+          command: |
+            echo "This is the unit tests"
 workflows:
   api:
     when: << pipeline.parameters.api >>
@@ -32,5 +54,13 @@ workflows:
       - api-build
   auth:
     when: << pipeline.parameters.auth >>
+    jobs:
+      - auth-build
+  e2e:
+    when: << pipeline.parameters.e2e >>
+    jobs:
+      - e2e-tests
+  unit:
+    when: << pipeline.parameters.unit >>
     jobs:
       - auth-build
